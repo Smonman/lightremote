@@ -57,8 +57,8 @@ def main(reaction_threshold, cycle_threshold, sampling_rate, history_length):
 
 
 def check_for_action(brightness, sq, reaction_threshold, cycle_threshold, cycle):
-    sq.put(brightness)
     avg_brightness = sq.sum() / sq.size
+    sq.put(brightness)
     print(f"current brightness: {brightness:0.5f}")
     print(f"last avg brightness: {avg_brightness:0.5f}")
     return (abs(brightness - avg_brightness) > reaction_threshold) and (cycle_threshold < cycle)
