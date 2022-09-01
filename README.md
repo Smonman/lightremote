@@ -8,4 +8,6 @@ Simply put, this program performes a left click on a significant change in brigh
 Start this program, start your stream, initially set to pause and leave the cursor where clicking would result in a play action. Now simply lay back and turn off the lights of the room.
 
 ## Installation
-wip
+```
+pip install 
+```
