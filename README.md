@@ -9,5 +9,5 @@ Start this program, start your stream, initially set to pause and leave the curs
 
 ## Installation
 ```
-pip install 
+pip install .
 ```
