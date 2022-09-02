@@ -1,6 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 
 import argparse
 import os
@@ -11,11 +9,10 @@ import cv2 as cv
 import mouse
 
 __author__ = "Simon Josef Kreuzpointner"
-__version__ = "1.0"
 
 
 class SizedQueue:
-    def __init__(self, size: int = 4):
+    def __init__(self, size: int):
         self.q = queue.Queue(size)
 
     def put(self, item):
@@ -25,7 +22,7 @@ class SizedQueue:
 
 
 class SummaryQueue(SizedQueue):
-    def __init__(self, size: int = 4):
+    def __init__(self, size: int):
         self.size = size
         SizedQueue.__init__(self, size)
 
