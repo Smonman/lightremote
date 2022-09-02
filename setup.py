@@ -8,5 +8,5 @@ setup(
     license='MIT',
     author='Simon Josef Kreuzpointner',
     author_email='simonkreuzpointner@gmail.com',
-    description=''
+    description='A primitive remote control for your computer that operates through changes of brighness'
 )
