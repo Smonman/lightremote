@@ -35,7 +35,7 @@ def handle_args():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
                         help="the threshold for a change in brightness",
-                        default="0.25")
+                        default="0.3")
     parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
                         help="number of cycles to be omitted after a positive signal",
                         default="2")
@@ -75,9 +75,15 @@ def main():
 def check_for_action(brightness, sq, reaction_threshold, cycle_threshold, cycle):
     avg_brightness = sq.sum() / sq.size
     sq.put(brightness)
-    print(f"current brightness: {brightness:0.5f}")
-    print(f"last avg brightness: {avg_brightness:0.5f}")
+    print_info(brightness, avg_brightness)
     return (abs(brightness - avg_brightness) > reaction_threshold) and (cycle_threshold < cycle)
+
+
+def print_info(brightness, avg_brightness):
+    print(
+        f"{'current brightness:'.ljust(25)}{brightness:0.5f}\n" +
+        f"{'last avg brightness:'.ljust(25)}{avg_brightness:0.5f}\n" +
+        f"{'abs. difference:'.ljust(25)}{abs(brightness - avg_brightness):0.5f}")
 
 
 def process_image(image):
