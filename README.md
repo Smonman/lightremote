@@ -13,12 +13,21 @@ Start this program, start your stream, initially set to pause and leave the curs
 Notice that it might be possible to adjust different values to make this tool work as expected in a different environment.
 
 ### How to start the program
+
+#### Without an installation
 Go to the directory where `lightremote.py` is stored: 
 ```
 python lightremote.py
 ```
 
-## Installation
+#### With an instalation
+You can just call `lightremote` from any directory
 ```
-pip install .
+lightremote
+```
+
+## Installation
+Go to the downloaded directory, and place it where you want it to be installed.
+```
+python setup.py install
 ```
