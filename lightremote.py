@@ -31,19 +31,22 @@ class SummaryQueue(SizedQueue):
 
 
 def handle_args():
-    parser = argparse.ArgumentParser(description="A primitive light-change sensor",
+    parser = argparse.ArgumentParser(description="A simple brightness-change detector",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
-                        help="the threshold for a change in brightness",
+                        help="The threshold for a change in brightness.\n" +
+                             "A larger change in brightness would result in an action",
                         default="0.3")
     parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
-                        help="number of cycles to be omitted after a positive signal",
+                        help="Number of cycles to be omitted after a positive signal.\n" +
+                        "This helps preventing multiple reactions to the same change in brightness.",
                         default="2")
     parser.add_argument("-s", "--sampling-rate", nargs="?", type=int,
-                        help="approx. of how many times per second a sample should be taken",
+                        help="Approximation of how many times per second a sample should be taken.\n" +
+                        "This also controls the cycles.",
                         default="2")
     parser.add_argument("-l", "--history-length", nargs="?", type=int,
-                        help="length of the history for the average brightness",
+                        help="Length in cycles of the history for the average brightness.",
                         default="5")
     return vars(parser.parse_args())
 
