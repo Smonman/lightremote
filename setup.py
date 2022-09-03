@@ -20,7 +20,7 @@ setup(
     scripts=["lightremote.py"],
     entry_points={
         'console_scripts': [
-            'lightremote = lightremote:handle_args'
+            'lightremote = lightremote:main'
         ]
     },
 )

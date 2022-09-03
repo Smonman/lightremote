@@ -45,11 +45,12 @@ def handle_args():
     parser.add_argument("-l", "--history-length", nargs="?", type=int,
                         help="length of the history for the average brightness",
                         default="5")
-    return vars(parser.parse_args()).values()
+    return vars(parser.parse_args())
 
 
 def main():
-    reaction_threshold, cycle_threshold, sampling_rate, history_length = handle_args()
+    args = handle_args()
+    reaction_threshold, cycle_threshold, sampling_rate, history_length = args.values()
     cycle = 0
     camera = cv.VideoCapture(0)
     sq = SummaryQueue(history_length)
