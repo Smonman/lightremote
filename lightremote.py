@@ -30,7 +30,26 @@ class SummaryQueue(SizedQueue):
         return sum(list(self.q.queue))
 
 
-def main(reaction_threshold, cycle_threshold, sampling_rate, history_length):
+def handle_args():
+    parser = argparse.ArgumentParser(description="A primitive light-change sensor",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
+                        help="the threshold for a change in brightness",
+                        default="0.25")
+    parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
+                        help="number of cycles to be omitted after a positive signal",
+                        default="2")
+    parser.add_argument("-s", "--sampling-rate", nargs="?", type=int,
+                        help="approx. of how many times per second a sample should be taken",
+                        default="2")
+    parser.add_argument("-l", "--history-length", nargs="?", type=int,
+                        help="length of the history for the average brightness",
+                        default="5")
+    return vars(parser.parse_args()).values()
+
+
+def main():
+    reaction_threshold, cycle_threshold, sampling_rate, history_length = handle_args()
     cycle = 0
     camera = cv.VideoCapture(0)
     sq = SummaryQueue(history_length)
@@ -42,7 +61,7 @@ def main(reaction_threshold, cycle_threshold, sampling_rate, history_length):
             if return_value:
                 b = process_image(image)
                 if check_for_action(b, sq, reaction_threshold, cycle_threshold, cycle):
-                    print("ACTION")
+                    print("CLICK")
                     mouse.click("left")
                     cycle = 0
                 cycle += 1
@@ -80,18 +99,4 @@ def get_image_brightness(gray_scale_image):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="A primitive light-change sensor",
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
-                        help="the threshold for a change in brightness",
-                        default="0.25")
-    parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
-                        help="number of cycles to be omitted after a positive signal",
-                        default="2")
-    parser.add_argument("-s", "--sampling-rate", nargs="?", type=int,
-                        help="approx. of how many times per second a sample should be taken",
-                        default="2")
-    parser.add_argument("-l", "--history-length", nargs="?", type=int,
-                        help="length of the history for the average brightness",
-                        default="5")
-    main(*vars(parser.parse_args()).values())
+    main()
