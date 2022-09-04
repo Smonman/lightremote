@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 def readfile(filename):
-    with open(filename, 'r+') as f:
+    with open(filename, "r+") as f:
         return f.read()
 
 
@@ -19,8 +19,8 @@ setup(
     install_requires=["opencv-python~=4.6.0.66", "mouse~=0.7.1"],
     scripts=["lightremote.py"],
     entry_points={
-        'console_scripts': [
-            'lightremote = lightremote:main'
+        "console_scripts": [
+            "lightremote = lightremote:main"
         ]
     },
 )
