@@ -11,23 +11,17 @@ import mouse
 __author__ = "Simon Josef Kreuzpointner"
 
 
-class SizedQueue:
+class SummaryQueue(queue.Queue):
     def __init__(self, size: int):
-        self.q = queue.Queue(size)
+        super().__init__(size)
 
-    def put(self, item):
-        if self.q.full():
-            self.q.get()
-        self.q.put(item)
-
-
-class SummaryQueue(SizedQueue):
-    def __init__(self, size: int):
-        self.size = size
-        SizedQueue.__init__(self, size)
+    def put(self, item, block: bool = ..., timeout: float | None = ...) -> None:
+        if self.full():
+            self.get()
+        super().put(item, block, timeout)
 
     def sum(self):
-        return sum(list(self.q.queue))
+        return sum(list(self.queue))
 
 
 def handle_args():
@@ -77,10 +71,10 @@ def main():
 
 
 def check_for_action(brightness, sq, reaction_threshold, cycle_threshold, cycle):
-    avg_brightness = sq.sum() / sq.size
-    sq.put(brightness)
+    avg_brightness = sq.sum() / sq.qsize() if sq.qsize() > 0 else 0
+    sq.put(brightness, False, None)
     print_info(brightness, avg_brightness)
-    return (abs(brightness - avg_brightness) > reaction_threshold) and (cycle_threshold < cycle)
+    return (abs(brightness - avg_brightness) > reaction_threshold) and (cycle_threshold < cycle) and (sq.full())
 
 
 def print_info(brightness, avg_brightness):
