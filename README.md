@@ -1,5 +1,5 @@
 # lightremote
-A primitive remote control for your computer that operates through changes of brightness
+A simple remote control that operates through changes of brightness.
 
 ## What do I need?
 * a webcam
