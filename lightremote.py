@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 import argparse
-import os
 import queue
 import time
+from os import system, name
 
 import cv2 as cv
 import mouse
@@ -24,27 +24,6 @@ class SummaryQueue(queue.Queue):
         return sum(list(self.queue))
 
 
-def handle_args():
-    parser = argparse.ArgumentParser(description="A simple brightness-change detector",
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
-                        help="The threshold for a change in brightness.\n" +
-                             "A larger change in brightness would result in an action",
-                        default="0.3")
-    parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
-                        help="Number of cycles to be omitted after a positive signal.\n" +
-                        "This helps preventing multiple reactions to the same change in brightness.",
-                        default="2")
-    parser.add_argument("-s", "--sampling-rate", nargs="?", type=int,
-                        help="Approximation of how many times per second a sample should be taken.\n" +
-                        "This also controls the cycles.",
-                        default="2")
-    parser.add_argument("-l", "--history-length", nargs="?", type=int,
-                        help="Length in cycles of the history for the average brightness.",
-                        default="5")
-    return vars(parser.parse_args())
-
-
 def main():
     args = handle_args()
     reaction_threshold, cycle_threshold, sampling_rate, history_length = args.values()
@@ -53,7 +32,7 @@ def main():
     sq = SummaryQueue(history_length)
     try:
         while True:
-            os.system("cls")
+            clear_screen()
             print("Type ^C to exit")
             return_value, image = camera.read()
             if return_value:
@@ -68,6 +47,27 @@ def main():
         print("Exiting...")
     finally:
         camera.release()
+
+
+def handle_args():
+    parser = argparse.ArgumentParser(description="A simple brightness-change detector",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-r", "--reaction-threshold", nargs="?", type=float,
+                        help="The threshold for a change in brightness.\n" +
+                             "A larger change in brightness would result in an action",
+                        default="0.3")
+    parser.add_argument("-c", "--cycle-threshold", nargs="?", type=int,
+                        help="Number of cycles to be omitted after a positive signal.\n" +
+                             "This helps preventing multiple reactions to the same change in brightness.",
+                        default="2")
+    parser.add_argument("-s", "--sampling-rate", nargs="?", type=int,
+                        help="Approximation of how many times per second a sample should be taken.\n" +
+                             "This also controls the cycles.",
+                        default="2")
+    parser.add_argument("-l", "--history-length", nargs="?", type=int,
+                        help="Length in cycles of the history for the average brightness.",
+                        default="5")
+    return vars(parser.parse_args())
 
 
 def check_for_action(brightness, sq, reaction_threshold, cycle_threshold, cycle):
@@ -100,6 +100,13 @@ def resize_image(image, factor):
 def get_image_brightness(gray_scale_image):
     s = sum(gray_scale_image[..., 2])
     return s / gray_scale_image.size
+
+
+def clear_screen():
+    if name == "nt":
+        system("cls")
+    else:
+        system("clear")
 
 
 if __name__ == "__main__":
