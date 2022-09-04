@@ -9,7 +9,6 @@ def readfile(filename):
 setup(
     name="lightremote",
     version="1.0.0",
-    packages=[""],
     url="https://github.com/Smonman/lightremote",
     license=readfile("LICENSE"),
     author="Simon Josef Kreuzpointner",
