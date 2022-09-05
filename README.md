@@ -20,7 +20,7 @@ Go to the directory where `lightremote.py` is stored:
 python lightremote.py
 ```
 
-#### With an instalation
+#### With an installation
 You can just call `lightremote` from any directory
 ```
 lightremote
