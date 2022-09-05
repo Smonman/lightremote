@@ -31,3 +31,9 @@ Go to the downloaded directory, and place it where you want it to be installed.
 ```
 python setup.py install
 ```
+
+## Deinstallation
+To uninstall `lightremote` just type
+```
+pip uninstall lightremote
+```
