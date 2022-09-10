@@ -40,3 +40,11 @@ To uninstall `lightremote` just type
 ```
 pip uninstall lightremote
 ```
+
+## Changelog
+
+### 1.1.0
+Added the feature to select a specific camera via the cameras index.
+
+### 1.0.0
+first version
