@@ -26,9 +26,9 @@ class SummaryQueue(queue.Queue):
 
 def main():
     args = handle_args()
-    reaction_threshold, cycle_threshold, sampling_rate, history_length = args.values()
+    reaction_threshold, cycle_threshold, sampling_rate, history_length, camera_index = args.values()
     cycle = 0
-    camera = cv.VideoCapture(0)
+    camera = cv.VideoCapture(camera_index)
     sq = SummaryQueue(history_length)
     try:
         while True:
@@ -42,6 +42,8 @@ def main():
                     mouse.click("left")
                     cycle = 0
                 cycle += 1
+            else:
+                print("An error occurred while trying to take a picture.")
             time.sleep(1 / sampling_rate)
     except KeyboardInterrupt:
         print("Exiting...")
@@ -67,6 +69,7 @@ def handle_args():
     parser.add_argument("-l", "--history-length", nargs="?", type=int,
                         help="Length in cycles of the history for the average brightness.",
                         default="5")
+    parser.add_argument("-i", "--camera-index", nargs="?", type=int, help="Index of the camera to use", default="0")
     return vars(parser.parse_args())
 
 
