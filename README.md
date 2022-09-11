@@ -73,7 +73,7 @@ This might be because the wrong camera is selected to be used. You can use the `
 
 ---
 
-### When turning off the lights the multiple clicks occur
+### When turning off the lights the multiple clicks occure
 Try increasing the _cycle threshold_ parameter via the `-c` flag.
 
 ---
